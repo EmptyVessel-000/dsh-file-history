@@ -1,0 +1,4 @@
+# dsh-file-history: one insert carries both halves (host row + client bundle).
+- insert:
+    - id: file-history
+      name: 'dsh-file-history'

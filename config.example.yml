@@ -1,0 +1,23 @@
+# 把这一段合并进 profile 的 cordis.patch.yml。
+# 走 bundle 通道（dsh plugin add）时不需要手写这段，只在要改默认值时加。
+
+- insert:
+    - id: file-history
+      name: 'dsh-file-history'
+      config:
+        # git 可执行文件路径。留空在 PATH 里找，也可用环境变量 DSH_FILE_HISTORY_GIT。
+        gitPath: ''
+        # 追加在默认排除清单之后的路径，写法同 .gitignore。
+        excludes: []
+        # 单个文件的上限（字节）。超过的只统计数量，不存内容。
+        maxFileBytes: 5242880
+        # 账本保留的轮次数，超出的旧轮次连同它的 git 引用一并裁剪。
+        maxEntries: 100
+        # 自动裁剪的切点取倒数第几个手动检查点。
+        pruneAfterCheckpoints: 2
+        # 一个手动点都没有时，至少保留最近多少轮。
+        keepRecentTurns: 20
+        # 单个目录的文件数超过这条线，整个目录不进快照。
+        maxDirFiles: 20000
+        # 整个工作区的字节数上限，超了从最大的文件开始让位。
+        maxBytes: 2147483648
