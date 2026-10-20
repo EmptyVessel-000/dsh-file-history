@@ -17,7 +17,8 @@
     "cordis.patch.yml",
     "README.md",
     "config.example.yml",
-    "LICENSE"
+    "LICENSE",
+    "docs"
   ],
   "keywords": [
     "dsh",
@@ -28,6 +29,10 @@
     "history",
     "git"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmptyVessel-000/dsh-file-history.git"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=20",
