@@ -119,7 +119,6 @@ C:\Users\Emptyvessel\.dsh\file-history\<sha256(工作区绝对路径)>\
 {
   id: string,              // 这一条的唯一标识，也是撤销点的锚
   sessionId: string,       // 哪条会话线写的这一行
-  endSessionId: string,    // 这一行结束时所在的会话（还原对话会换线）
   turn: number,            // 第几轮
   time: string,            // 轮次结束时间
   startSeq: number,        // 这一轮开始时的会话序号，开分支按它对齐
@@ -281,6 +280,7 @@ DSH 没有「原地截断会话」的接口：`dsh-session`、`dsh-session-persi
 
 - 单目录文件数超 `maxDirFiles`（默认 2 万）、整个工作区超 `maxBytes`（默认 2GB）时整块丢：这些文件不进这一轮的快照，卡片上标一行「已按规模上限降级」，不静默跳过
 - 单文件超 `maxFileBytes`（默认 5MB）同样按规模丢，不静默跳过
+- 自带 `.git` 的目录要按文件展开才看得见内容，但先数一遍：第一次遇到时超过 `maxRepoFiles`（默认 2 万）就整块不认、指针留着，卡片上点名是哪几个目录
 - 排除清单是配置项（`exclude`），不是硬编码；默认值只覆盖公认的产物目录
 - 所有降级都在界面上说清楚，不做静默丢弃
 

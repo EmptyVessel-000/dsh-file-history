@@ -62,6 +62,7 @@ dsh plugin --profile web remove dsh-file-history
         pruneAfterCheckpoints: 2   # 自动裁剪到倒数第几个检查点
         keepRecentTurns: 20        # 检查点不够上面这个数时保留最近多少轮
         maxDirFiles: 20000         # 单个目录超过这么多文件就整块不记
+        maxRepoFiles: 20000        # 自带 .git 的目录超过这么多文件就整块不记
         maxBytes: 2147483648       # 整个工作区的记录上限（2 GB）
 ```
 
@@ -69,7 +70,11 @@ dsh plugin --profile web remove dsh-file-history
 
 全部在 `$DSH_HOME/file-history/`（默认 `~/.dsh`）下，项目目录零残留，不外传。内容相同的文件只存一份；超出保留轮数的旧记录连同对象一并回收。
 
+这不是永不丢失的记录工具：手动删掉 `file-history/` 下对应目录后，插件按全新工作区重建，之前的历史不再找回；父会话的账本已经不在了，新分支就不再往上接。
+
 默认不记录 `node_modules`、`.git`、`dist`、`build`、`.venv` 这类目录，以及单个超过 5 MB 的文件；大文件变小后会重新记录。
+
+工作区里自带 `.git` 的目录按文件记录，不是只记一个「这里有个仓库」的指针——里面改了、加了、删了都能看到。列文件用的是那个仓库自己的忽略规则，它的 `node_modules` 和产物同样不会进来。第一次遇到时文件数就超过 `maxRepoFiles` 的仓库整块不记，那一轮的卡片上会点名是哪几个目录。
 
 ## 已知限制
 
@@ -82,3 +87,5 @@ dsh plugin --profile web remove dsh-file-history
 ## 开发
 
 无构建步骤：`lib/index.js` 是服务端 ESM，`lib/client.js` 是浏览器端成品 bundle。设计见 `DESIGN.md`。
+
+纯解析与合并规则在 `lib/parse.js`，不碰 git 也不碰文件，直接用 `node --test` 验：`npm test`。
