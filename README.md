@@ -30,7 +30,7 @@ dsh plugin --profile web remove dsh-file-history
 
 ## 界面
 
-![主分支：轮次卡片、输入框上方的改动条、侧栏时间线](docs/demo-main.png)
+![界面截图：主分支的轮次卡片、输入框上方的改动条、侧栏时间线](https://raw.githubusercontent.com/EmptyVessel-000/dsh-file-history/HEAD/docs/screenshot-main.png)
 
 **对话下方**：每条真正改动了文件的回复下面一张卡片，含文件列表（新增 / 修改 / 删除）、增删行数、被跳过的大文件数量。点文件名展开 diff；底部四颗按钮——只还原文件、只还原对话、全部还原、从这里开分支；还原后出现「撤销还原」。没改动的轮次不出卡片。
 
@@ -50,7 +50,7 @@ dsh plugin --profile web remove dsh-file-history
 
 「从这里开分支」把文件摆回那一轮结束时的样子，再看一个新会话接上去，原会话和它之后的轮次一条都不删。时间线上属于父分支的轮次是只读的，四颗按钮都灰着——要动那条线，先用改动条上方那张卡跳过去。
 
-![子分支：父分支的轮次压暗只读，检查点单独一行](docs/demo-branch.png)
+![界面截图：子分支里父分支的轮次压暗只读，检查点单独一行](https://raw.githubusercontent.com/EmptyVessel-000/dsh-file-history/HEAD/docs/screenshot-branch.png)
 
 ## 检查点
 
