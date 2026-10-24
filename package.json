@@ -1,6 +1,6 @@
 {
   "name": "dsh-file-history",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Per-turn file history for DeepSeek Harness: every conversation turn gets a snapshot, a change card in the chat, and one-click rollback of files, conversation, or both.",
   "type": "module",
   "main": "lib/index.js",
