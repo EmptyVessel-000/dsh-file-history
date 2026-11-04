@@ -1,6 +1,6 @@
 {
   "name": "dsh-file-history",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Per-turn file history for DeepSeek Harness: every conversation turn gets a snapshot, a change card in the chat, and one-click rollback of files, conversation, or both.",
   "type": "module",
   "main": "lib/index.js",
@@ -8,7 +8,7 @@
     "test": "node --test"
   },
   "dependencies": {
-    "schemastery": "^3.18.0"
+    "@deepseek-ai/schemastery": "^3.19.0"
   },
   "exports": {
     ".": "./lib/index.js",
@@ -19,6 +19,7 @@
     "lib",
     "cordis.patch.yml",
     "README.md",
+    "CHANGELOG.md",
     "config.example.yml",
     "LICENSE",
     "docs"
@@ -39,7 +40,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=20",
-    "dsh": ">=0.1.5-rc.3 <0.1.7"
+    "dsh": ">=0.1.7-rc.2 <0.3.0"
   },
   "dsh": {
     "bundle": {
