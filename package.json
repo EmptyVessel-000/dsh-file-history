@@ -39,7 +39,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=20",
-    "dsh": "^0.1.5-rc.3"
+    "dsh": ">=0.1.5-rc.3 <0.1.7"
   },
   "dsh": {
     "bundle": {

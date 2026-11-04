@@ -26,7 +26,7 @@ dsh plugin --profile web add dsh-file-history
 dsh plugin --profile web remove dsh-file-history
 ```
 
-需要 DSH 0.1.x、Node.js ≥ 20、git ≥ 2.20。git 不在 PATH 里时用配置项 `gitPath` 或环境变量 `DSH_FILE_HISTORY_GIT` 指定绝对路径。工作区不必是 git 仓库：插件自带存储，不读也不写项目里的 `.git`。找不到 git 时不阻断对话，卡片上显示一行不可用提示。
+需要 DSH ≥ 0.1.5-rc.3 且 < 0.1.7（0.1.7-alpha.1 起设置接口换了一套，本版还没适配）、Node.js ≥ 20、git ≥ 2.20。git 不在 PATH 里时用配置项 `gitPath` 或环境变量 `DSH_FILE_HISTORY_GIT` 指定绝对路径。工作区不必是 git 仓库：插件自带存储，不读也不写项目里的 `.git`。找不到 git 时不阻断对话，卡片上显示一行不可用提示。
 
 ## 界面
 
