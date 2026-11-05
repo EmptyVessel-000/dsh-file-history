@@ -21,6 +21,21 @@ test('raw 输出成对取，状态缺省算修改', () => {
   ])
 })
 
+test('改名在 raw 里跟两条路径：先旧后新', () => {
+  const buffer = z([':100644 100644 aaaa bbbb R100', 'src/old.js', 'src/new.js', ':100644 100644 cccc dddd M', 'src/b.js', ''])
+  assert.deepEqual(parseRaw(buffer), [
+    { status: 'R', oldPath: 'src/old.js', newSha: 'bbbb', path: 'src/new.js' },
+    { status: 'M', newSha: 'dddd', path: 'src/b.js' }
+  ])
+})
+
+test('改名的 numstat 路径位是空的，按新名记账', () => {
+  const map = parseNumstat(z(['0	0	', 'src/old.js', 'src/new.js', '2	1	src/b.js', '']))
+  assert.deepEqual(map.get('src/new.js'), { additions: 0, deletions: 0, binary: false })
+  assert.deepEqual(map.get('src/b.js'), { additions: 2, deletions: 1, binary: false })
+  assert.equal(map.has('src/old.js'), false)
+})
+
 test('numstat 里的 - 表示二进制，不做减法', () => {
   const map = parseNumstat(z(['3\t1\tsrc/a.js', '-\t-\timg/logo.png', '']))
   assert.deepEqual(map.get('src/a.js'), { additions: 3, deletions: 1, binary: false })
