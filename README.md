@@ -54,7 +54,7 @@ dsh plugin --profile web add dsh-file-history
 dsh plugin --profile web remove dsh-file-history
 ```
 
-需要 DSH ≥ 0.1.7-rc.2 且 < 0.3.0、Node.js ≥ 20、git ≥ 2.20。0.1.5 那一代用 0.3.x 的旧版本。git 不在 PATH 里时用配置项 `gitPath` 或环境变量 `DSH_FILE_HISTORY_GIT` 指定绝对路径。工作区不必是 git 仓库：插件自带存储，不读也不写项目里的 `.git`。找不到 git 时不阻断对话，卡片上显示一行不可用提示。
+需要 DSH 0.1.5 至 0.1.6（不含 0.1.7）、Node.js ≥ 20、git ≥ 2.20。用 0.1.7 及以后的版本请装 0.4.x。git 不在 PATH 里时用配置项 `gitPath` 或环境变量 `DSH_FILE_HISTORY_GIT` 指定绝对路径。工作区不必是 git 仓库：插件自带存储，不读也不写项目里的 `.git`。找不到 git 时不阻断对话，卡片上显示一行不可用提示。
 
 ## 界面
 
@@ -103,7 +103,7 @@ dsh plugin --profile web remove dsh-file-history
 
 ## 配置
 
-写在 profile 的 `cordis.patch.yml` 里，示例见 `config.example.yml`。这些值也能在**设置 → 插件 → 文件历史**（插件页里的一个 tab）里直接改：三个界面开关和几个数量上限都在那一页，改完下一轮就生效，不用重启。
+写在 profile 的 `cordis.patch.yml` 里，示例见 `config.example.yml`。这些值也能在**设置 → 插件 → 文件历史**里直接改：三个界面开关和几个数量上限都在那一项里，改完下一轮就生效，不用重启。
 
 ```yaml
 - insert:
@@ -137,7 +137,7 @@ dsh plugin --profile web remove dsh-file-history
 - 符号链接按普通文件处理
 - 插件装上之前的改动不在历史里
 - 侧栏面板不自动弹出，需自己打开
-- 0.4.0 起只支持 DSH ≥ 0.1.7-rc.2；0.1.5 一系留在 0.3.x
+- 这条 0.3.x 支线只支持 DSH 0.1.5 至 0.1.6；0.1.7 及以后用 0.4.x
 - 轮次下方的文件清单与 diff 用的是 DSH 官方那一份，会话重启后官方只留文件名、不再给 diff，插件这边仍可还原到任意一轮
 
 ## 遇到问题
