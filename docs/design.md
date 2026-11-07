@@ -109,6 +109,20 @@
 
 没有差异的轮次不落行（空条目没有信息量）；但骨架（线引用、开头点）照常维护。
 
+## 模块表（改代码前先看这里，不必通读文件）
+
+| 文件 | 职责 | 主要入口 |
+| --- | --- | --- |
+| `lib/index.js` | 插件入口：注册 RPC 端点、注入宿主服务 | `apply` |
+| `lib/history.js` | RPC 层：state / restore / point / config / clear，分支与归档 | `History.handle`、`ownEntries`、`forkBefore`、`reanchor` |
+| `lib/workspace.js` | 账本与影子仓库：快照、检查点、裁剪、还原、占用 | `capture`、`snapshot`、`maintain`、`pointsOf`、`setBaseline`、`revertTree` |
+| `lib/config.js` | 配置默认值与按工作区/会话的键 | `settingsFrom`、`keyFor` |
+| `lib/git.js` | git 进程调用与可用性探测 | `run`、`detectGit` |
+| `lib/parse.js` | git 输出解析（raw / numstat / ls-files / batch） | `parseRaw`、`parseNumstat`、`parseLsFiles`、`foldPointers` |
+| `lib/client.js` | 三个界面、设置卡、动作判定 | `abilities`（动作判定唯一来源）、`Entry`、`Panel`、`Card`、`apply` |
+
+动作口径集中在 `abilities(kind)`：`kind` 由数据给出（turn / covered / origin / fork / manual），三处界面只读结果，不再各自拼条件。
+
 ## 五、界面（四处，各有各的唯一职责）
 
 1. **轮次动作行**（`conversation.chat.turnTail`，官方文件清单卡片的下方）：只放动作，不放文件清单——清单归官方。动作：设置检查点 / 还原文件到该轮 / 还原对话到该轮 / 还原文件和对话 / 从该轮创建分支 / 撤销此轮更改。有快照的轮次给全套（设置检查点、还原文件到该轮、还原对话到该轮、还原文件和对话、从该轮创建分支、撤销此轮更改）；被设成检查点的那一轮仍是同一套，只把「设置检查点」换成「删除检查点」；扫过但没改动的轮次只给「设置检查点」；没扫过的轮次（自动拍快照关着）一颗都不给。对话与时间线两处是同一套按钮——时间线只是同一份记录的缩影。
