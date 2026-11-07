@@ -3,3 +3,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 .dsh-code-index/
+
+# 测试与临时产物
+测试用文件.txt
+*.tmp
+.tmp-*
