@@ -158,3 +158,49 @@ test('端点报错原样带出，别折成一句笼统的话', async () => {
     await cleanup()
   }
 })
+
+
+// 六轮，每轮改一次同一个文件；检查点跟着它那一轮设，跟真实用法一致。
+async function sixTurns(history, root) {
+  const file = path.join(root, 'beta.txt')
+  await fsp.writeFile(file, '0\n')
+  const workspace = await history.workspace(root)
+  await workspace.snapshot({ sessionId: 'line-1', turn: 1, startSeq: 1, endSeq: 2 })
+  for (let turn = 2; turn <= 6; turn += 1) {
+    await fsp.writeFile(file, String(turn) + '\n')
+    const entry = await workspace.snapshot({ sessionId: 'line-1', turn, startSeq: turn * 2 - 1, endSeq: turn * 2 })
+    if (turn === 2 || turn === 4) await workspace.addCheckpoint('line-1', turn, entry.tree, 'manual', turn * 2)
+  }
+  await workspace.persist()
+  return workspace
+}
+
+test('两道上限同时生效：轮次窗口与检查点窗口都满足才留下', async () => {
+  const { history, root, cleanup } = harness()
+  try {
+    const workspace = await sixTurns(history, root)
+    await history.handle('config', { sessionId: 'line-1', keep: 1, prune: 2 })
+    await workspace.maintain()
+    // 最近 1 轮是第六轮，它也在倒数第二个检查点之后：留下来；
+    // 第三到第五轮虽然不算旧，但早于切点，一并删掉。
+    const tight = await history.handle('state', { sessionId: 'line-1' })
+    assert.deepEqual(tight.value.entries.map((one) => one.turn), [6])
+  } finally {
+    await cleanup()
+  }
+})
+
+test('轮次窗口设 0 就只按检查点那条线裁', async () => {
+  const { history, root, cleanup } = harness()
+  try {
+    const workspace = await sixTurns(history, root)
+    await history.handle('config', { sessionId: 'line-1', keep: 0 })
+    await workspace.maintain()
+    // 倒数第二个检查点在第二轮上：第三轮往后的都留着，更早的清掉。
+    const loose = await history.handle('state', { sessionId: 'line-1' })
+    // 列表按时间倒序下发。
+    assert.deepEqual(loose.value.entries.map((one) => one.turn), [6, 5, 4, 3])
+  } finally {
+    await cleanup()
+  }
+})
