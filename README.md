@@ -157,4 +157,4 @@ dsh plugin --profile web remove dsh-file-history
 - `lib/config.js`：默认值、设置页的 schema、账本路径。
 - `lib/parse.js`：纯解析与合并规则，不碰 git 也不碰文件，`npm test` 验的就是它。
 
-设计见 `DESIGN.md`，每个版本改了什么见 `CHANGELOG.md`。
+数据模型与取舍见 [docs/design.md](docs/design.md)，每个版本改了什么见 [CHANGELOG.md](CHANGELOG.md)。
